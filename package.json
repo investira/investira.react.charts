@@ -2,14 +2,28 @@
   "name": "investira.react.charts",
   "version": "0.1.0",
   "private": true,
+  "peerDependencies": {
+    "investira.sdk": "investira/investira.sdk.js#node-16.13.2",
+    "react": "17.0.2"
+  },
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^12.1.5",
-    "@testing-library/user-event": "^13.5.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-scripts": "5.0.0",
-    "web-vitals": "^2.1.4"
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "d3-array": "2.12.1",
+    "d3-color": "2.0.0",
+    "d3-format": "2.0.0",
+    "d3-interpolate": "2.0.1",
+    "d3-path": "2.0.0",
+    "d3-scale": "3.3.0",
+    "d3-shape": "2.1.0",
+    "d3-time": "2.1.1",
+    "d3-time-format": "3.0.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-scripts": "4.0.3",
+    "recharts": "^2.1.9",
+    "web-vitals": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
