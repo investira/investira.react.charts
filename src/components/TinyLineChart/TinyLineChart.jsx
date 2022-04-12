@@ -13,6 +13,7 @@ const TinyLineChart = memo((props) => {
           stroke={helpers.getColor(props.strokeColor)}
           strokeWidth={props.strokeWidth}
           dot={props.dot}
+          margin={props.margin}
         />
       </LineChart>
     </ResponsiveContainer>
@@ -33,6 +34,7 @@ TinyLineChart.propTypes = {
   ]),
   dataKey: PropTypes.string,
   type: PropTypes.string,
+  margin: PropTypes.object,
 };
 
 TinyLineChart.defaultProps = {
@@ -44,6 +46,7 @@ TinyLineChart.defaultProps = {
   dot: false,
   dataKey: "value",
   type: "monotone",
+  margin: { top: 5, right: 0, bottom: 5, left: 0 },
 };
 
 TinyLineChart.displayName = "TinyLineChart";
