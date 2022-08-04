@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
-import { ResponsiveContainer, LineChart, Line } from "recharts";
+import { ResponsiveContainer, LineChart, Line, YAxis } from "recharts";
 import { validators } from "investira.sdk";
 import { helpers } from "../../utils";
 
@@ -8,6 +8,8 @@ const MultiSeriesTinyLineChart = memo((props) => {
   return (
     <ResponsiveContainer width={props.width} height={props.height}>
       <LineChart width={600} height={props.height} data={props.data}>
+        <YAxis type="number" domain={props.ydomain} hide={true} />
+        {/* <ReferenceLine y={0} stroke="red" strokeDasharray="3 3" /> */}
         {props.dataKeys.map((xDataKey, xIndex) => {
           return (
             <Line
@@ -44,6 +46,7 @@ MultiSeriesTinyLineChart.propTypes = {
   dataKeys: PropTypes.array,
   type: PropTypes.string,
   margin: PropTypes.object,
+  ydomain: PropTypes.array,
 };
 
 MultiSeriesTinyLineChart.defaultProps = {
@@ -55,6 +58,7 @@ MultiSeriesTinyLineChart.defaultProps = {
   dataKeys: ["y"],
   type: "monotone",
   margin: { top: 5, right: 0, bottom: 5, left: 0 },
+  ydomain: [0, "dataMax"],
 };
 
 MultiSeriesTinyLineChart.displayName = "MultiSeriesTinyLineChart";
