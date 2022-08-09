@@ -22,6 +22,7 @@ const MultiSeriesTinyLineChart = memo((props) => {
                   : helpers.getColor(props.strokeColors[xIndex])
               }
               strokeWidth={props.strokeWidth}
+              strokeDasharray={props.strokeDasharray[xIndex]}
               dot={props.dot}
             />
           );
@@ -47,6 +48,7 @@ MultiSeriesTinyLineChart.propTypes = {
   type: PropTypes.string,
   margin: PropTypes.object,
   ydomain: PropTypes.array,
+  strokeDasharray: PropTypes.array,
 };
 
 MultiSeriesTinyLineChart.defaultProps = {
@@ -59,6 +61,7 @@ MultiSeriesTinyLineChart.defaultProps = {
   type: "monotone",
   margin: { top: 5, right: 0, bottom: 5, left: 0 },
   ydomain: [0, "dataMax"],
+  strokeDasharray: PropTypes.array,
 };
 
 MultiSeriesTinyLineChart.displayName = "MultiSeriesTinyLineChart";
