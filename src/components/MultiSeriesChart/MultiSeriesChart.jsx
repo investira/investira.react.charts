@@ -6,35 +6,13 @@ import {
   Line,
   YAxis,
   XAxis,
-  ReferenceLine,
   Legend,
   Tooltip,
   CartesianGrid,
 } from "recharts";
-import { validators, formats, dates } from "investira.sdk";
 import { helpers } from "../../utils";
 
 const MultiSeriesChart = memo((props) => {
-  const dateFormatter = (date) => {
-    return formats.formatDateCustom(new Date(date), "MMM YY");
-  };
-
-  // const xTicks = props.data.map((xData) => xData.data);
-  // const endDate = new Date(xTicks.at(-1));
-  // const domain = [(dataMin) => dataMin, () => endDate.getTime()];
-
-  // const renderLegend = (props) => {
-  //   const { payload } = props;
-
-  //   return (
-  //     <ul>
-  //       {payload.map((entry, index) => (
-  //         <li key={`item-${index}`}>{entry.value}</li>
-  //       ))}
-  //     </ul>
-  //   );
-  // };
-
   return (
     <ResponsiveContainer width={props.width} height={props.height}>
       <LineChart
@@ -44,15 +22,7 @@ const MultiSeriesChart = memo((props) => {
         margin={{ right: 18, left: 18, top: 16 }}
       >
         <Tooltip
-          formatter={(value, name, props) => {
-            const xName = props.payload.metadata[name];
-            const xValue = formats.friendlyNumber(value, 2, true);
-            return [xValue, xName, props];
-          }}
-          labelFormatter={(pValue) => {
-            const xDate = dates.toDate(pValue);
-            return formats.formatDateCustom(xDate, "MMMM YY");
-          }}
+          {...props.tooltipProps}
           labelStyle={{
             textTransform: "capitalize",
             fontSize: "11px",
@@ -67,49 +37,34 @@ const MultiSeriesChart = memo((props) => {
             border: 0,
             backgroundColor: helpers.getColor("secondary.main"),
           }}
-          active={true}
         />
         <YAxis
           type="number"
-          domain={props.ydomain}
-          hide={props.yAxisHide}
-          includeHidden
-          reversed={true}
+          domain={["dataMin", "dataMax"]}
+          tick={{ fontSize: 11 }}
+          stroke={helpers.getColor("secondary.light")}
+          {...props.yAxisProps}
         />
         <XAxis
           type="number"
-          dataKey="data"
-          domain={props.xdomain}
-          hide={props.xAxisHide}
-          scale="time"
-          tickFormatter={dateFormatter}
-          interval={0}
-          includeHidden
+          domain={["dataMin", "dataMax"]}
           tick={{ fontSize: 11 }}
-          ticks={props.xTicks}
           stroke={helpers.getColor("secondary.light")}
+          {...props.xAxisProps}
         />
         <CartesianGrid vertical={false} strokeOpacity={0.2} stroke="#7A81AB" />
         {props.dataKeys.map((xDataKey, xIndex) => {
           return (
             <Line
               key={xIndex}
-              type={props.type}
               dataKey={xDataKey}
-              // stroke={
-              //   validators.isEmpty(props.strokeColors)
-              //     ? helpers.getColor("primary.main")
-              //     : helpers.getColor(props.strokeColors[xIndex])
-              // }
-              stroke={props.strokeColors[xIndex]}
-              strokeWidth={props.strokeWidth}
-              strokeDasharray={props.strokeDasharray[xIndex]}
-              dot={props.dot}
+              {...props.lineProps}
+              stroke={props.lineProps.stroke[xIndex]}
             />
           );
         })}
         <Legend
-          iconType="plainline"
+          iconType="line"
           formatter={(value, entry, index) => {
             const { color } = entry;
             return (
@@ -127,40 +82,77 @@ const MultiSeriesChart = memo((props) => {
 
 MultiSeriesChart.propTypes = {
   data: PropTypes.array,
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  strokeColors: PropTypes.array,
-  strokeWidth: PropTypes.number,
-  dot: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.object,
-    PropTypes.func,
-    PropTypes.element,
-  ]),
   dataKeys: PropTypes.array,
-  type: PropTypes.string,
+  legend: PropTypes.array,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  lineProps: PropTypes.shape({
+    type: PropTypes.string,
+    stroke: PropTypes.array,
+    strokeWidth: PropTypes.number,
+    strokeDasharray: PropTypes.array,
+    dot: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.object,
+      PropTypes.func,
+      PropTypes.element,
+    ]),
+  }),
   margin: PropTypes.object,
-  ydomain: PropTypes.array,
-  xdomain: PropTypes.array,
-  strokeDasharray: PropTypes.array,
-  yAxisHide: PropTypes.bool,
-  xAxisHide: PropTypes.bool,
+  yAxisProps: {
+    type: PropTypes.string,
+    scale: PropTypes.string,
+    domain: PropTypes.array,
+    hide: PropTypes.bool,
+    interval: PropTypes.number,
+    reversed: PropTypes.bool,
+  },
+  xAxisProps: {
+    type: PropTypes.string,
+    scale: PropTypes.string,
+    domain: PropTypes.array,
+    hide: PropTypes.bool,
+    interval: PropTypes.number,
+    reversed: PropTypes.bool,
+  },
+  tooltipProps: PropTypes.shape({
+    formatter: PropTypes.func,
+    labelFormatter: PropTypes.func,
+  }),
 };
 
 MultiSeriesChart.defaultProps = {
+  data: [],
+  dataKeys: ["y"],
   width: "100%",
   height: 100,
-  strokeWidth: 2,
-  strokeColors: ["primary.main"],
-  dot: false,
-  dataKeys: ["y"],
-  type: "monotone",
+  lineProps: {
+    type: "monotone",
+    stroke: ["primary.main"],
+    strokeWidth: 2,
+    strokeDasharray: ["0 0"],
+    dot: false,
+  },
   margin: { top: 5, right: 0, bottom: 5, left: 0 },
-  ydomain: [0, "dataMax"],
-  xdomain: [0, "dataMax"],
-  strokeDasharray: ["0 0"],
-  yAxisHide: true,
-  xAxisHide: false,
+  yAxisProps: {
+    type: "number",
+    scale: "time",
+    domain: ["dataMin", "dataMax"],
+    hide: false,
+    interval: 0,
+    reversed: false,
+  },
+  xAxisProps: {
+    type: "number",
+    scale: "time",
+    domain: ["dataMin", "dataMax"],
+    hide: false,
+    interval: 0,
+  },
+  tooltipProps: {
+    formatter: (value, name, props) => [value, name, props],
+    labelFormatter: (value) => value,
+  },
 };
 
 MultiSeriesChart.displayName = "MultiSeriesChart";
