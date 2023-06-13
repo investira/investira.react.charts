@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   ResponsiveContainer,
@@ -13,6 +13,12 @@ import {
 import { helpers } from "../../utils";
 
 const MultiSeriesChart = memo((props) => {
+  const [dataVersion, setDataVersion] = useState(0);
+
+  useEffect(() => {
+    setDataVersion((value) => value + 1);
+  }, [props.data]);
+
   return (
     <ResponsiveContainer width={props.width} height={props.height}>
       <LineChart
@@ -56,7 +62,7 @@ const MultiSeriesChart = memo((props) => {
         {props.dataKeys.map((xDataKey, xIndex) => {
           return (
             <Line
-              key={xIndex}
+              key={`data-${dataVersion}-line-${xIndex}`}
               dataKey={xDataKey}
               {...props.lineProps}
               stroke={props.lineProps.stroke[xIndex]}
@@ -131,7 +137,7 @@ MultiSeriesChart.defaultProps = {
     stroke: ["primary.main"],
     strokeWidth: 2,
     strokeDasharray: ["0 0"],
-    dot: false,
+    dot: true,
   },
   margin: { top: 5, right: 0, bottom: 5, left: 0 },
   yAxisProps: {
