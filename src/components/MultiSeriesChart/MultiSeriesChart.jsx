@@ -70,15 +70,7 @@ const MultiSeriesChart = memo((props) => {
           );
         })}
         <Legend
-          iconType="line"
-          formatter={(value, entry, index) => {
-            const { color } = entry;
-            return (
-              <span style={{ color, fontSize: "11px" }}>
-                {props.legend[index]}
-              </span>
-            );
-          }}
+          {...props.legendProps}
           wrapperStyle={{ left: 0, width: "100%" }}
         />
       </LineChart>
