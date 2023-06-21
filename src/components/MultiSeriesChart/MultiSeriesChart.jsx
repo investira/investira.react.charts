@@ -10,6 +10,7 @@ import {
   Tooltip,
   CartesianGrid,
 } from "recharts";
+import { validators } from "investira.sdk";
 import { helpers } from "../../utils";
 
 const MultiSeriesChart = memo((props) => {
@@ -18,6 +19,10 @@ const MultiSeriesChart = memo((props) => {
   useEffect(() => {
     setDataVersion((value) => value + 1);
   }, [props.data]);
+
+  if (validators.isNull(props.data)) {
+    return null;
+  }
 
   return (
     <ResponsiveContainer width={props.width} height={props.height}>
@@ -97,22 +102,22 @@ MultiSeriesChart.propTypes = {
     ]),
   }),
   margin: PropTypes.object,
-  yAxisProps: {
+  yAxisProps: PropTypes.shape({
     type: PropTypes.string,
     scale: PropTypes.string,
     domain: PropTypes.array,
     hide: PropTypes.bool,
     interval: PropTypes.number,
     reversed: PropTypes.bool,
-  },
-  xAxisProps: {
+  }),
+  xAxisProps: PropTypes.shape({
     type: PropTypes.string,
     scale: PropTypes.string,
     domain: PropTypes.array,
     hide: PropTypes.bool,
     interval: PropTypes.number,
     reversed: PropTypes.bool,
-  },
+  }),
   tooltipProps: PropTypes.shape({
     formatter: PropTypes.func,
     labelFormatter: PropTypes.func,
@@ -125,11 +130,8 @@ MultiSeriesChart.defaultProps = {
   width: "100%",
   height: 100,
   lineProps: {
-    type: "monotone",
     stroke: ["primary.main"],
     strokeWidth: 2,
-    strokeDasharray: ["0 0"],
-    dot: true,
   },
   margin: { top: 5, right: 0, bottom: 5, left: 0 },
   yAxisProps: {
