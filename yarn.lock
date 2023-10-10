@@ -6479,10 +6479,10 @@
   "resolved" "https://registry.npmjs.org/investira.data/-/investira.data-1.3.1.tgz"
   "version" "1.3.1"
 
-"investira.sdk@^2.3.13":
-  "integrity" "sha512-KA07xyu7Bq0MWABB9tEdbYrVUVCUASpMk9bmLN/Gq44UDiMN/LLg2NEVAUW6z+paddY8NhdlMkLOV6dOQOHPdQ=="
-  "resolved" "https://registry.npmjs.org/investira.sdk/-/investira.sdk-2.3.13.tgz"
-  "version" "2.3.13"
+"investira.sdk@^2.3.14":
+  "integrity" "sha512-r8dIfhpC5OngVHwTRj4dSUsqcGX4aHwekvtVRHugYE5Cb4rXE3JZ4LFmaqNcZW7Ml9DcycL1q2wWFudbbLFZiA=="
+  "resolved" "https://registry.npmjs.org/investira.sdk/-/investira.sdk-2.3.14.tgz"
+  "version" "2.3.14"
   dependencies:
     "axios" "1.5.1"
     "deep-diff" "1.0.2"
