@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
+import { formats } from "investira.sdk";
 
 const CompositionChart = memo((props) => {
   const COLORS = [
@@ -14,18 +15,7 @@ const CompositionChart = memo((props) => {
   const renderCustomizedLabel = (props) => {
     const RADIAN = Math.PI / 180;
 
-    const {
-      metadata,
-      cx,
-      cy,
-      midAngle,
-
-      outerRadius,
-
-      fill,
-      value,
-      percent,
-    } = props;
+    const { cx, cy, midAngle, outerRadius, fill, percentual } = props;
     const sin = Math.sin(-RADIAN * midAngle);
     const cos = Math.cos(-RADIAN * midAngle);
     const sx = cx + (outerRadius + 5) * cos;
@@ -50,9 +40,63 @@ const CompositionChart = memo((props) => {
           textAnchor={textAnchor}
           fill="#333"
         >
-          {percent}%
+          {formats.formatNumber(percentual, 2)}%
         </text>
       </g>
+    );
+  };
+
+  const renderLegend = (props) => {
+    const { payload } = props;
+
+    return (
+      <div className="recharts-legend-wrapper" style={{ paddingTop: "16px" }}>
+        <ul
+          className="recharts-default-legend"
+          style={{ padding: 0, margin: 0, textAlign: "center" }}
+        >
+          {payload.map((entry, index) => (
+            <li
+              className={`recharts-legend-item legend-item-${index}`}
+              key={`item-${index}`}
+              style={{
+                display: "inline-block",
+                marginLeft: "8px",
+                marginRight: "8px",
+              }}
+            >
+              <svg
+                className="recharts-surface"
+                width="8"
+                height="8"
+                viewBox="0 0 32 32"
+                version="1.1"
+                style={{
+                  display: "inline-block",
+                  verticalAlign: "middle",
+                  marginRight: "4px",
+                }}
+              >
+                <path
+                  fill={COLORS[index % COLORS.length]}
+                  cx="16"
+                  cy="16"
+                  type="circle"
+                  className="recharts-symbols"
+                  transform="translate(16, 16)"
+                  d="M16,0A16,16,0,1,1,-16,0A16,16,0,1,1,16,0"
+                ></path>
+              </svg>
+              <span
+                className="recharts-legend-item-text"
+                style={{ color: COLORS[index % COLORS.length] }}
+              >
+                {entry.descricao}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
     );
   };
 
@@ -66,7 +110,16 @@ const CompositionChart = memo((props) => {
       <div>{props.label}</div>
 
       <ResponsiveContainer width="100%" height="100%">
-        <PieChart width={500} height={500}>
+        <PieChart
+          width={500}
+          height={500}
+          margin={{
+            top: 20,
+            right: 0,
+            left: -16,
+            bottom: 30,
+          }}
+        >
           <Pie
             data={props.data}
             cx="50%"
@@ -76,7 +129,7 @@ const CompositionChart = memo((props) => {
             outerRadius={70}
             innerRadius={20}
             fill="#8884d8"
-            dataKey="value"
+            dataKey={props.dataKey || "value"}
             isAnimationActive={false}
           >
             {props.data.map((_entry, xIndex) => (
@@ -87,13 +140,14 @@ const CompositionChart = memo((props) => {
               />
             ))}
           </Pie>
-          <Legend
+          {/* <Legend
             layout={"horizontal"}
             align="center"
             verticalAlign="bottom"
             iconType="circle"
             iconSize={8}
-          />
+          /> */}
+          <Legend payload={props.data} content={renderLegend} />
         </PieChart>
       </ResponsiveContainer>
     </div>

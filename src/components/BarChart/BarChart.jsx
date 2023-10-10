@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { formats } from "investira.sdk";
 import {
   BarChart as ReBarChart,
   Bar,
@@ -19,51 +20,6 @@ const COLORS = [
   "#66B131",
   "#861DB0",
   "#FB9902",
-];
-
-const DATA = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
 ];
 
 const CustomBar = (props) => {
@@ -102,7 +58,7 @@ const renderCustomizedLabel = (props) => {
         textAnchor="middle"
         dominantBaseline="middle"
       >
-        {value}%
+        {formats.formatNumber(value, 2)}%
       </text>
     </g>
   );
@@ -112,7 +68,7 @@ const renderLegend = (props) => {
   const { payload } = props;
 
   return (
-    <div class="recharts-legend-wrapper" style={{ paddingTop: "16px" }}>
+    <div className="recharts-legend-wrapper" style={{ paddingTop: "16px" }}>
       <ul
         className="recharts-default-legend"
         style={{ padding: 0, margin: 0, textAlign: "center" }}
@@ -128,7 +84,7 @@ const renderLegend = (props) => {
             }}
           >
             <svg
-              class="recharts-surface"
+              className="recharts-surface"
               width="8"
               height="8"
               viewBox="0 0 32 32"
@@ -144,16 +100,16 @@ const renderLegend = (props) => {
                 cx="16"
                 cy="16"
                 type="circle"
-                class="recharts-symbols"
+                className="recharts-symbols"
                 transform="translate(16, 16)"
                 d="M16,0A16,16,0,1,1,-16,0A16,16,0,1,1,16,0"
               ></path>
             </svg>
             <span
-              class="recharts-legend-item-text"
+              className="recharts-legend-item-text"
               style={{ color: COLORS[index % COLORS.length] }}
             >
-              {entry.name}
+              {entry.descricao}
             </span>
           </li>
         ))}
@@ -180,7 +136,7 @@ const BarChart = (props) => {
             top: 20,
             right: 0,
             left: -16,
-            bottom: 20,
+            bottom: 30,
           }}
           barSize={30}
         >
@@ -195,13 +151,13 @@ const BarChart = (props) => {
 
           <CartesianGrid strokeDasharray="1 3" vertical={false} />
           <Bar
-            dataKey="percent"
+            dataKey="percentual"
             fill="#3E1AA4"
             background={{ fill: "#eee", opacity: 0.5 }}
             shape={<CustomBar />}
             isAnimationActive={false}
           >
-            <LabelList dataKey="percent" content={renderCustomizedLabel} />
+            <LabelList dataKey="percentual" content={renderCustomizedLabel} />
             {props.data.map((_entry, index) => (
               <Cell
                 key={`cell-${index}`}

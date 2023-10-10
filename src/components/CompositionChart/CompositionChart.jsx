@@ -26,6 +26,7 @@ const CompositionChart = memo((props) => {
 
       percent,
     } = props;
+
     const sin = Math.sin(-RADIAN * midAngle);
     const cos = Math.cos(-RADIAN * midAngle);
     const sx = cx + (outerRadius + 5) * cos;
