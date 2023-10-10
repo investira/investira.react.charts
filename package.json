@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "peerDependencies": {
-    "investira.sdk": "investira/investira.sdk.js#node-16.13.2",
+    "investira.sdk": "2.3.12",
     "react": "17.0.2"
   },
   "dependencies": {
