@@ -7,22 +7,17 @@
     "react": "17.0.2"
   },
   "dependencies": {
+    "@highcharts/map-collection": "^2.3.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "d3-array": "2.12.1",
-    "d3-color": "2.0.0",
-    "d3-format": "2.0.0",
     "d3-interpolate": "2.0.1",
-    "d3-path": "2.0.0",
     "d3-scale": "3.3.0",
-    "d3-shape": "2.1.0",
-    "d3-time": "2.1.1",
-    "d3-time-format": "3.0.0",
+    "highcharts": "^11.4.5",
+    "highcharts-react-official": "^3.2.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-scripts": "4.0.3",
-    "recharts": "^2.1.9",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -51,5 +46,15 @@
   },
   "resolutions": {
     "react-error-overlay": "6.0.9"
+  },
+  "devDependencies": {
+    "d3-array": "^3.2.4",
+    "d3-color": "^3.1.0",
+    "d3-format": "^3.1.0",
+    "d3-path": "^3.1.0",
+    "d3-shape": "^3.2.0",
+    "d3-time": "^3.1.0",
+    "d3-time-format": "^4.1.0",
+    "recharts": "^2.10.1"
   }
 }

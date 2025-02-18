@@ -5,3 +5,7 @@ export { default as MultiSeriesChart } from "./MultiSeriesChart";
 export { default as CompositionChart } from "./CompositionChart";
 export { default as DonutChart } from "./DonutChart";
 export { default as BarChart } from "./BarChart";
+export { default as HighchartsReact } from "./HighchartsReact";
+export { default as HighstocksReact } from "./HighstocksReact";
+export { default as StocksChart } from "./StocksChart";
+export { default as MapsChart } from "./MapsChart";
