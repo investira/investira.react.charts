@@ -2,11 +2,11 @@ import React, { forwardRef, useEffect } from "react";
 import Highcharts from "highcharts";
 import { HighchartsReact as HCR } from "highcharts-react-official";
 import drilldown from "highcharts/modules/drilldown";
+import "highcharts-pattern-fill";
 import { validators } from "investira.sdk";
 
 const HighchartsReact = forwardRef((props, ref) => {
   const { options, isLoading, theme, ...restProps } = props;
-  console.log("isLoading", isLoading);
 
   if (props.drilldown) {
     drilldown(Highcharts);
