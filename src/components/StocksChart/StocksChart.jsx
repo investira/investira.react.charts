@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, forwardRef } from "react";
 import Highcharts from "highcharts/highstock";
+import HighchartsBrokenAxis from "highcharts/modules/broken-axis";
 import { validators } from "investira.sdk";
+
+// Inicialize o módulo broken-axis
+HighchartsBrokenAxis(Highcharts);
 
 const StocksChart = forwardRef((props, ref) => {
   const { options, isLoading, ...restProps } = props;
@@ -143,7 +147,6 @@ const StocksChart = forwardRef((props, ref) => {
     });
 
     if (!validators.isNull(ref.current)) {
-      console.log("ref.current", ref.current);
       const chart = ref.current;
 
       if (isLoading) {
