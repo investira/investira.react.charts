@@ -1,5 +1,6 @@
 import React, { forwardRef, useEffect } from "react";
 import Highcharts from "highcharts";
+import HighchartsMore from "highcharts/highcharts-more";
 import { HighchartsReact as HCR } from "highcharts-react-official";
 import drilldown from "highcharts/modules/drilldown";
 import "highcharts-pattern-fill";
@@ -141,6 +142,8 @@ const HighchartsReact = forwardRef((props, ref) => {
 
   Highcharts.setOptions(Highcharts.theme);
   Highcharts.setOptions({ lang });
+
+  HighchartsMore(Highcharts);
 
   useEffect(() => {
     if (!validators.isNull(ref?.current)) {
